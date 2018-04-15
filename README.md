@@ -1,8 +1,8 @@
 # clucstr
-[![Build Status](https://travis-ci.org/clucompany/cluAtoi.svg?branch=master)](https://travis-ci.org/clucompany/cluAtoi)
+[![Build Status](https://travis-ci.org/clucompany/cluCStr.svg?branch=master)](https://travis-ci.org/clucompany/cluCStr)
 [![Apache licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
-[![crates.io](http://meritbadge.herokuapp.com/cluatoi)](https://crates.io/crates/clucstr)
-[![Documentation](https://docs.rs/cluatoi/badge.svg)](https://docs.rs/clucstr)
+[![crates.io](http://meritbadge.herokuapp.com/clucstr)](https://crates.io/crates/clucstr)
+[![Documentation](https://docs.rs/clucstr/badge.svg)](https://docs.rs/clucstr)
 
 Secure creation of CStr with zero cost. Plugin for rust compiler.
 
