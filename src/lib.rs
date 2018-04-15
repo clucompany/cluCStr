@@ -64,7 +64,6 @@ fn println_str(cstr: &CStr) {
 ```
 
 # Panic
-A null byte was found.
 ```
 #![feature(plugin)]
 #![plugin(clucstr)]
