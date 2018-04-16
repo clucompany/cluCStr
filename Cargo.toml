@@ -8,7 +8,7 @@ readme = "README.md"
 
 description = "Creation of CStr with zero cost. Plugin for rust compiler."
 keywords = ["cstr", "clucstr", "clucompany"]
-categories = ["macro::plugin::cstr::str::clucompany"]
+categories = ["development-tools::ffi"]
 
 
 [lib]
