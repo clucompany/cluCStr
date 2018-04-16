@@ -1,6 +1,6 @@
 [package]
 name = "clucstr"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Денис Котляров <#Ulin Project 18, denis2005991@gmail.com>"]
 repository = "https://github.com/clucompany/cluCStr.git"
 license = "Apache-2.0"
@@ -14,6 +14,6 @@ categories = ["development-tools::ffi"]
 [lib]
 name = "clucstr"
 crate-type = ["dylib", "rlib"]
-
+plugin = true
 
 [dependencies]
