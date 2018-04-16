@@ -143,6 +143,7 @@ test tests::cstr_macros ... bench:          90 ns/iter (+/- 14)
 test tests::cstr_plugin ... bench:           0 ns/iter (+/- 0)
 */
 #![feature(plugin_registrar, rustc_private)]
+#![feature(i128_type)]
 
 extern crate syntax;
 extern crate rustc;
