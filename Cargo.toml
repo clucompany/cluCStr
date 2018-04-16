@@ -7,7 +7,7 @@ license = "Apache-2.0"
 readme = "README.md"
 
 description = "Creation of CStr with zero cost. Plugin for rust compiler."
-
+keywords = ["cstr", "clucstr"]
 
 
 [lib]
