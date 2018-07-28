@@ -186,7 +186,13 @@ pub fn plugin_registrar(reg: &mut Registry) {
 pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<MacResult + 'static> {
 	let mut parser = cx.new_parser_from_tts(args);
 
-	let expr = parser.parse_expr().unwrap();
+	let expr = match parser.parse_expr() {
+		Ok(a) => a,
+		Err(_e) => {
+			cx.span_err(sp, "cstr currently only supports one argument");
+			return DummyResult::any(sp);
+		}
+	};
 	
 	let c_array = {	
 		let mut add_null = true;
