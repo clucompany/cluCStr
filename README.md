@@ -4,7 +4,13 @@
 [![crates.io](http://meritbadge.herokuapp.com/clucstr)](https://crates.io/crates/clucstr)
 [![Documentation](https://docs.rs/clucstr/badge.svg)](https://docs.rs/clucstr)
 
-Secure creation of CStr with zero cost. Plugin for rust compiler.
+Creation of strings C with zero cost. A plug-in for the rust compiler.
+
+# Features
+1. The transparent creation of the C strings with zero cost.
+2. Check of the C lines at the level of the compiler.
+3. Convenient macro for creation of lines.
+4. Plug-in for the compiler. 
 
 
 # Use
