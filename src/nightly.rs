@@ -2,7 +2,6 @@
 use syntax::source_map::Span;
 use syntax::tokenstream::TokenTree;
 use syntax::ext::base::{ExtCtxt, MacResult, DummyResult, MacEager};
-use syntax::ext::build::AstBuilder;
 use rustc_plugin::Registry;
 use syntax::ast::ExprKind;
 use syntax::ast::LitKind;
@@ -15,9 +14,9 @@ use syntax::ast::BlockCheckMode;
 use syntax::ast::UnsafeSource;
 use syntax::ast::Block;
 use syntax::ptr::P;
-use syntax::parse::token::Token;
 use syntax::ast;
 use syntax::ast::IntTy;
+use syntax::parse::token::TokenKind;
 
 
 #[doc(hidden)]
@@ -27,7 +26,7 @@ pub fn plugin_registrar(reg: &mut Registry) {
 }
 
 #[doc(hidden)]
-pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<MacResult + 'static> {
+pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult + 'static> {
 	let mut parser = cx.new_parser_from_tts(args);
 	
 	let mut args_len = args.len();
@@ -36,12 +35,12 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<MacResult + '
 		match parser.parse_expr() {
 			Ok(a) => array_expr.push(a),
 			Err(_e) => {
-				cx.span_err(parser.span, "incorrect data, was expected: &[u8], str, u8, i8");
+				cx.span_err(parser.prev_span, "incorrect data, was expected: &[u8], str, u8, i8");
 				return DummyResult::any(sp);
 			}
 		}
 		let mut count_elements = 1;
-		while parser.eat(&Token::Comma) {
+		while parser.eat(&TokenKind::Comma) {
 			args_len -= 1;
 			//del comma
 			
@@ -51,13 +50,13 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<MacResult + '
 					array_expr.push(a);
 				},
 				Err(_e) => {
-					cx.span_err(parser.span, "incorrect data, was expected: &[u8], str, u8, i8");
+					cx.span_err(parser.prev_span, "incorrect data, was expected: &[u8], str, u8, i8");
 					return DummyResult::any(sp);
 				},
 			}
 		}
 		if count_elements != args_len {
-			cx.span_err(parser.span, "It was expected ',' or closing of a macro.");
+			cx.span_err(parser.prev_span, "It was expected ',' or closing of a macro.");
 			return DummyResult::any(sp);
 		}
 	}
