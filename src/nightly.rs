@@ -67,6 +67,8 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult
 			match unk.node {
 				ExprKind::Lit(ref l) => {
 					match l.node {
+						
+						//"str"
 						LitKind::Str(ref array, _) => {
 							let s_array = array.as_str();
 							let array = s_array.as_bytes();
@@ -86,6 +88,9 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult
 								}
 							}
 						},
+						//
+						
+						//b"str"
 						LitKind::ByteStr(ref array) => {
 							let array = array.as_slice();
 							
@@ -104,17 +109,22 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult
 								}
 							}
 						},
+						//
 						
+						
+						
+						
+						
+						//Int 0
+						LitKind::Int(0, LitIntType::Unsuffixed) if unk_index+1 == args_len => break 'looper,
 						LitKind::Int(0, LitIntType::Unsuffixed) => {
-							if unk_index+1 == args_len {
-								break 'looper;
-							}else {
-								cx.span_err(l.span, "trailing byte detected");
-								return DummyResult::any(sp);
-							}
+							cx.span_err(l.span, "trailing byte detected");
+							return DummyResult::any(sp);
 						},
+						//
 						
-						LitKind::Int(ref a, LitIntType::Unsigned(UintTy::U8)) 
+						//Int, i8, u8
+						LitKind::Int(ref a, LitIntType::Unsigned(UintTy::U8))
 						| LitKind::Int(ref a, LitIntType::Signed(IntTy::I8))
 						=> {
 							match a {
@@ -131,21 +141,21 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult
 								},
 							}	
 						},
+						//
 						
-						LitKind::Byte(ref a) => {
-							match a {
-								0u8 if unk_index+1 == args_len => break 'looper,
-								0u8 => {
-									cx.span_err(l.span, "trailing byte detected");
-									return DummyResult::any(sp);
-								},
-								_ => {
-									r_array.push(
-										cx.expr_lit(sp, LitKind::Int(*a as u128, LitIntType::Unsigned(UintTy::U8)))
-									);
-								},	
-							}
+						//Byte 0:
+						LitKind::Byte(0) if unk_index+1 == args_len => break 'looper,
+						LitKind::Byte(0) => {
+							cx.span_err(l.span, "trailing byte detected");
+							return DummyResult::any(sp);
 						},
+						//
+						
+						//Byte
+						LitKind::Byte(a) => r_array.push(cx.expr_lit(sp, LitKind::Int(a as u128, LitIntType::Unsigned(UintTy::U8)))),
+						//
+						
+						//Unk type
 						_ => {
 							cx.span_err(l.span, "incorrect data, was expected: &[u8], str, u8, i8");
 							return DummyResult::any(sp);
@@ -214,13 +224,11 @@ pub fn cstr(cx: &mut ExtCtxt, sp: Span, args: &[TokenTree]) -> Box<dyn MacResult
 			},
 			id: ast::DUMMY_NODE_ID,
 			rules: BlockCheckMode::Unsafe(UnsafeSource::CompilerGenerated), //<-- UNSAFE
-			span: sp, 
-			
-			//recovered: false,
-			//FIX!, UPDATE RUST:((
+			span: sp,
 		});
 		cx.expr_block(block) //RESULT EXPR
-	})// unsafe { &*([u8] as *const [u8] as *const CStr) }
+	})
+	// unsafe { &*([u8] as *const [u8] as *const CStr) }
 }
 
 
