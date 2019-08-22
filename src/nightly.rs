@@ -2,7 +2,6 @@
 use syntax::source_map::Span;
 use syntax::tokenstream::TokenTree;
 use syntax::ext::base::{ExtCtxt, MacResult, DummyResult, MacEager};
-use rustc_plugin::Registry;
 use syntax::ast::ExprKind;
 use syntax::ast::LitKind;
 use syntax::ast::Mutability;
@@ -17,7 +16,7 @@ use syntax::ptr::P;
 use syntax::ast;
 use syntax::ast::IntTy;
 use syntax::parse::token::TokenKind;
-
+use rustc_driver::plugin::Registry;
 
 #[doc(hidden)]
 #[plugin_registrar]

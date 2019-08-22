@@ -191,15 +191,12 @@ Copyright 2019 #UlinProject Denis Kotlyarov (Денис Котляров)
 Licensed under the Apache License, Version 2.0
 */
 
-#![feature(test)]
-#![feature(plugin_registrar)]
-#![feature(rustc_private)]
+#![crate_type="dylib"]
+#![feature(plugin_registrar, rustc_private)]
 
 
 extern crate syntax;
-extern crate rustc;
-extern crate rustc_plugin;
-
+extern crate rustc_driver;
 
 mod nightly;
 pub use self::nightly::*;
