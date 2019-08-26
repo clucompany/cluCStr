@@ -98,7 +98,7 @@ fn main() {
 
 
 # Panic
-```
+```compile_fail
 #![feature(plugin)]
 #![plugin(clucstr)]
 
@@ -106,20 +106,20 @@ fn main() {
 use std::ffi::CStr;
 
 fn main() {
-	//let c_str = cstr!("cluW\0orld");
+	let c_str = cstr!("cluW\0orld");
 	//PANIC! trailing byte detected
 	
-	//let c_str2 = cstr!("cluWorld\0\0");
+	let c_str2 = cstr!("cluWorld\0\0");
 	//PANIC! trailing byte detected
 	
-	//let c_str3 = cstr!("\0clu", b"W\0orld");
+	let c_str3 = cstr!("\0clu", b"W\0orld");
 	//PANIC! trailing byte detected
 	
-	/*let c_str4 = cstr!(
+	let c_str4 = cstr!(
 		b'c', b'l', b'u', 0u8,
 		b'W', b'o', b'r', b'l', b'd',
 		0
-	);*/
+	);
 	//PANIC! trailing byte detected
 }
 ```
