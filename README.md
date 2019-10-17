@@ -13,7 +13,7 @@ Safe creation of “CStr” with zero cost at the compilation stage with checkin
 4. All actions happen at a compilation stage, processor time is not required.
 
 # Use
-```
+```rust
 #![feature(plugin)]
 #![plugin(clucstr)]
 
@@ -68,7 +68,7 @@ fn my_function(num: usize, a: &'static CStr) {
 
 # EasyUse
 
-```
+```rust
 #![feature(plugin)]
 #![plugin(clucstr)]
 
@@ -84,7 +84,7 @@ fn main() {
 ```
 
 # Panic
-```
+```rust
 #![feature(plugin)]
 #![plugin(clucstr)]
 
@@ -112,7 +112,7 @@ fn main() {
 
 # Benchmarking
 
-```
+```rust
 #![feature(test)]
 
 #![feature(plugin)]
