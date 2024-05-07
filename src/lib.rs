@@ -38,12 +38,6 @@ fn main() {
 	assert_eq!(cstr.to_bytes_with_nul(), b"How are you?\0");
 }
 ```
-
-## Features:
-1. Safe `CStr` creation at compile time.
-2. Zero-byte checking at compile time.
-3. Concatenation of multiple values of different types.
-4. All operations are performed at compile time, incurring zero runtime cost.
 */
 
 #![no_std]
