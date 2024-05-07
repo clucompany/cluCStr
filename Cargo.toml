@@ -1,20 +1,23 @@
 [package]
-name = "clucstr"
-version = "1.1.91"
+name = "cluCStr"
+version = "1.2.0"
 authors = ["Denis Kotlyarov (Денис Котляров) <denis2005991@gmail.com>"]
 repository = "https://github.com/clucompany/cluCStr.git"
-edition = "2018"
+edition = "2021"
 
 license = "Apache-2.0"
 readme = "README.md"
 
-description = "Safe creation of “CStr” with zero cost at the compilation stage with checking for zero bytes and the ability to transfer multiple values."
-keywords = ["cstr", "rust-plugin", "create_cstr", "clucompany"]
+description = "Safe and efficient creation of \"CStr\" with zero-byte checking and support for concatenating multiple values."
+keywords = ["macro", "cstr", "no-std", "clucompany"]
 categories = ["development-tools::ffi"]
 
 [features]
 
 [lib]
-plugin = true
+proc-macro = true
 
 [dependencies]
+quote = "1.0.36"
+proc-macro2 = "1.0.81"
+memchr = { version = "2.7.2", default-features = false }
