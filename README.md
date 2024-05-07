@@ -38,7 +38,7 @@ Add this to your Cargo.toml:
 
 ```toml
 [dependencies]
-cluCStr = "1.2.0"
+clucstr = "1.2.0"
 ```
 
 and this to your source code:
