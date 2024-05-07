@@ -28,7 +28,7 @@ Safe and efficient creation of "CStr" with zero-byte checking and support for co
 You can use `c"wow"` since Rust 1.77.0 instead of `cstr!("wow")` from this crate. This new feature provides more concise code and faster compilation. If you are using an older Rust API (like 1.66), this crate will still be relevant for some time.
 
 ## Example:
-```
+```rust
 use cluCStr::cstr;
 use core::ffi::CStr;
 

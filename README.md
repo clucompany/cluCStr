@@ -48,7 +48,7 @@ use core::ffi::CStr;
 ```
 
 ## Example:
-```
+```rust
 use cluCStr::cstr;
 use core::ffi::CStr;
 
