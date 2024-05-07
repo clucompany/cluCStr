@@ -6,7 +6,7 @@
   </br></br>
 
 <div id="badges">
-  <a href="./LICENSE_APACHE">
+  <a href="./LICENSE">
     <img src="https://github.com/UlinProject/img/blob/main/short_32/apache2.png?raw=true" alt="apache2"/>
   </a>
   <a href="https://crates.io/crates/cluCStr">
@@ -84,7 +84,7 @@ This project has a single license (LICENSE-APACHE-2.0).
 
 ### Apache License:
 <div align="left">
-  <a href="./LICENSE_APACHE">
+  <a href="./LICENSE">
     <img align="left" src="https://github.com/UlinProject/img/blob/main/block_220_100/apache2.png?raw=true" alt="apache2"/>
     
   </a>
