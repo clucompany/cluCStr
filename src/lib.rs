@@ -1,7 +1,3 @@
-#![allow(non_snake_case)]
-#![allow(clippy::redundant_static_lifetimes)]
-#![allow(clippy::tabs_in_doc_comments)]
-#![allow(clippy::needless_doctest_main)]
 //Copyright 2019-2024 #UlinProject Denis Kotlyarov (Денис Котляров)
 
 //Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +12,10 @@
 //See the License for the specific language governing permissions and
 // limitations under the License.
 
+#![allow(non_snake_case)]
+#![allow(clippy::redundant_static_lifetimes)]
+#![allow(clippy::tabs_in_doc_comments)]
+#![allow(clippy::needless_doctest_main)]
 
 //#Ulin Project (17 1819) - 2024
 //
