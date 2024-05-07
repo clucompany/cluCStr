@@ -1,177 +1,93 @@
-# clucstr
-[![Build Status](https://travis-ci.org/clucompany/cluCStr.svg?branch=master)](https://travis-ci.org/clucompany/cluCStr)
-[![Apache licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
-[![crates.io](http://meritbadge.herokuapp.com/clucstr)](https://crates.io/crates/clucstr)
-[![Documentation](https://docs.rs/clucstr/badge.svg)](https://docs.rs/clucstr)
+<div id="header" align="center">
 
-Safe creation of “CStr” with zero cost at the compilation stage with checking for zero bytes and the ability to transfer multiple values.
+  <b>[clucstr]</b>
+  
+  ( Safe and efficient creation of "CStr" with zero-byte checking and support for concatenating multiple values. )
+  </br></br>
 
-# Features
-1. Creation of safe CStr at a compilation stage.
-2. Check of zero bytes at a stage of compilation or checks of "Rls or Rust check".
-3. Concatenation of several values, different types: [u8], & 'static str, u8, i8, (0 without specifying the type).
-4. All actions happen at a compilation stage, processor time is not required.
+<div id="badges">
+  <a href="./LICENSE_APACHE">
+    <img src="https://github.com/UlinProject/img/blob/main/short_32/apache2.png?raw=true" alt="apache2"/>
+  </a>
+  <a href="https://crates.io/crates/cluCStr">
+    <img src="https://github.com/UlinProject/img/blob/main/short_32/cratesio.png?raw=true" alt="cratesio"/>
+  </a>
+  <a href="https://docs.rs/cluCStr">
+    <img src="https://github.com/UlinProject/img/blob/main/short_32/docrs.png?raw=true" alt="docrs"/>
+  </a>
+  <a href="https://github.com/denisandroid">
+    <img src="https://github.com/UlinProject/img/blob/main/short_32/uproject.png?raw=true" alt="uproject"/>
+  </a>
+  <a href="https://github.com/clucompany">
+    <img src="https://github.com/UlinProject/img/blob/main/short_32/clulab.png?raw=true" alt="clulab"/>
+  </a>
+	
+  [![CI](https://github.com/clucompany/cluCStr/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/clucompany/cluCStr/actions/workflows/CI.yml) 
 
-# Use
+
+</div>
+</div>
+
+## Note:
+
+<b>You can use `c"wow"` since Rust 1.77.0 instead of `cstr!("wow")` from this crate. This new feature provides more concise code and faster compilation. If you are using an older Rust API (like 1.66), this crate will still be relevant for some time.</b>
+
+## Usage:
+
+Add this to your Cargo.toml:
+
+```toml
+[dependencies]
+cluCStr = "1.2.0"
+```
+
+and this to your source code:
 ```rust
-#![feature(plugin)]
-#![plugin(clucstr)]
+use cluCStr::cstr;
+use core::ffi::CStr;
+```
 
-use std::ffi::CStr;
+## Example:
+```
+use cluCStr::cstr;
+use core::ffi::CStr;
 
 fn main() {
-	let cstr_1 = cstr!("cluWorld");
-	assert_eq!(cstr_1.to_bytes_with_nul(), b"cluWorld\0");
-	//"cluWorld", [99, 108, 117, 87, 111, 114, 108, 100, 0], len:9
+	let cstr = cstr!(b"How are you?");
 	
-	let cstr_2 = cstr!("cluWorld\0");
-	//"cluWorld", [99, 108, 117, 87, 111, 114, 108, 100, 0], len:9
-	assert_eq!(cstr_2.to_bytes_with_nul(), b"cluWorld\0");
-	
-	let cstr_3 = cstr!("clu", b"World");
-	//"cluWorld", [99, 108, 117, 87, 111, 114, 108, 100, 0], len:9
-	assert_eq!(cstr_3.to_bytes_with_nul(), b"cluWorld\0");
-	
-	let cstr_4 = cstr!(
-		b'c', b'l', b'u',
-		b'W', b'o', b'r', b'l', b'd',
-		0
-	);
-	//"cluWorld", [99, 108, 117, 87, 111, 114, 108, 100, 0], len:9
-	assert_eq!(cstr_4.to_bytes_with_nul(), b"cluWorld\0");
-	
-	let cstr_5 = cstr!(
-		"clu",
-		//It is possible to insert such values as: [u8], & 'static str, u8, i8, (0 without specifying the type).
-		
-		b'W', b'o', b'r', b'l', b"d\0"
-		//The zero byte is automatically added, it is possible to write it, and it is possible not to write.
-		//It is forbidden to insert zero byte in the middle or at the beginning of a line.
-	);
-	//"cluWorld", [99, 108, 117, 87, 111, 114, 108, 100, 0], len:9
-	assert_eq!(cstr_5.to_bytes_with_nul(), b"cluWorld\0");
-	
-	my_function(1, cstr_1);
-	my_function(2, cstr_2);
-	my_function(3, cstr_3);
-	my_function(4, cstr_4);
-	my_function(5, cstr_5);
-}
-
-fn my_function(num: usize, a: &'static CStr) {
-	//'static --> it is possible not to write.
-	
-	let c_arr = a.to_bytes_with_nul();
-	println!("#cstr_{} {:?}, array: {:?}, len: {}", num, a, c_arr, c_arr.len());
+	assert_eq!(cstr.to_bytes_with_nul(), b"How are you?\0");
 }
 ```
 
-# EasyUse
+<a href="./examples">
+  See all
+</a>
 
-```rust
-#![feature(plugin)]
-#![plugin(clucstr)]
+## Features:
+1. Safe `CStr` creation at compile time.
+2. Zero-byte checking at compile time.
+3. Concatenation of multiple values of different types.
+4. All operations are performed at compile time, incurring zero runtime cost.
 
-use std::ffi::CStr;
+## License:
+This project has a single license (LICENSE-APACHE-2.0).
 
-fn main() {
-	let cstr = cstr!("My CSTR!");
-	//&CStr
+<div align="left">
+  <a href="https://github.com/denisandroid">
+    <img align="left" src="https://github.com/UlinProject/img/blob/main/block_220_100/uproject.png?raw=true" alt="uproject"/>
+  </a>
+  <b>&nbsp;Copyright (c) 2019-2024 #UlinProject</b>
 	
-	assert_eq!(cstr.to_bytes(), b"My CSTR!");
-	assert_eq!(cstr.to_bytes_with_nul(), b"My CSTR!\0");
-}
-```
+  <b>&nbsp;(Denis Kotlyarov).</b>
+  </br></br></br>
+</div>
 
-# Panic
-```rust
-#![feature(plugin)]
-#![plugin(clucstr)]
-
-#[allow(unused_imports)]
-use std::ffi::CStr;
-
-fn main() {
-	//let c_str = cstr!("cluW\0orld");
-	//PANIC! trailing byte detected
-	
-	//let c_str2 = cstr!("cluWorld\0\0");
-	//PANIC! trailing byte detected
-	
-	//let c_str3 = cstr!("\0clu", b"W\0orld");
-	//PANIC! trailing byte detected
-	
-	/*let c_str4 = cstr!(
-		b'c', b'l', b'u', 0u8,
-		b'W', b'o', b'r', b'l', b'd',
-		0
-	);*/
-	//PANIC! trailing byte detected
-}
-```
-
-# Benchmarking
-
-```rust
-#![feature(test)]
-
-#![feature(plugin)]
-#![plugin(clucstr)]
-
-
-#[cfg(test)]
-mod tests {
-	use super::*;
-	use tests::test::Bencher;
-	use std::ffi::CStr;
-	
-	extern crate test;
-	
-	
-	
-	macro_rules! unsafe_cstr {
-		($s:expr) => {
-			unsafe {
-		   		::std::ffi::CStr::from_ptr(
-					concat!($s, "\0") 
-						as *const str  
-						as *const [::std::os::raw::c_char] 
-						as *const ::std::os::raw::c_char
-				)
-			}
-		};
-	}
-	
-	#[bench]
-	fn cstr_plugin(b: &mut Bencher) {
-		b.iter(|| {
-			for _a in 0..10 {
-				let _cstr0 = cstr!(b"test");
-			}
-		});
-	}
-	#[bench]
-	fn cstr_macros(b: &mut Bencher) {
-		b.iter(|| {
-			for _a in 0..10 {
-				let _cstr0 = unsafe_cstr!("test");
-			}
-		});
-	}
-}
-``` 
-running 2 tests
-
-test tests::cstr_macros ... bench:		  67 ns/iter (+/- 1) !Attention ns > 0, full unsafe, no guarantees
-
-test tests::cstr_plugin ... bench:		   0 ns/iter (+/- 0) !Attention ns == 0, plus zero byte checking and plus concatenation
-
-# Launch benchmark: 
-
-cargo bench --example bench
-
-# License
-
-Copyright 2019 #UlinProject Denis Kotlyarov (Денис Котляров)
-
-Licensed under the Apache License, Version 2.0
+### Apache License:
+<div align="left">
+  <a href="./LICENSE_APACHE">
+    <img align="left" src="https://github.com/UlinProject/img/blob/main/block_220_100/apache2.png?raw=true" alt="apache2"/>
+    
+  </a>
+  <b>&nbsp;Licensed under the Apache License, Version 2.0.</b>
+  </br></br></br></br>
+</div>
