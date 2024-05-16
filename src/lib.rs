@@ -23,11 +23,11 @@
 /*!
 Safe and efficient creation of "CStr" with zero-byte checking and support for concatenating multiple values.
 
-## Note:
+## Note
 
 You can use `c"wow"` since Rust 1.77.0 instead of `cstr!("wow")` from this crate. This new feature provides more concise code and faster compilation. If you are using an older Rust API (like 1.66), this crate will still be relevant for some time.
 
-## Example:
+## Example
 ```rust
 use cluCStr::cstr;
 use core::ffi::CStr;
@@ -54,7 +54,7 @@ use quote::quote;
 use proc_macro::TokenStream;
 use proc_macro2::{TokenTree as TokenTree2, Literal, Span};
 
-/// Returns tokens that generate a compilation error with the given message 
+/// Returns tokens that generate a compilation error with the given message
 /// in the specified source code range.
 #[inline]
 fn __make_pm_compile_error(span: Span, message: &str) -> TokenStream {
@@ -64,7 +64,7 @@ fn __make_pm_compile_error(span: Span, message: &str) -> TokenStream {
 	})
 }
 
-/// The macro creates a tree with a single compile_error macro and with 
+/// The macro creates a tree with a single compile_error macro and with
 /// the corrected span and error message.
 macro_rules! pm_compile_error {
 	($span: expr, $e: expr) => {{
@@ -72,7 +72,7 @@ macro_rules! pm_compile_error {
 	}};
 }
 
-/// Checks for null bytes in the data being processed and aborts with an error 
+/// Checks for null bytes in the data being processed and aborts with an error
 /// message if one is detected.
 macro_rules! thiserr_nullbyte {
 	[
@@ -86,13 +86,13 @@ macro_rules! thiserr_nullbyte {
 	}};
 }
 
-/// A marker that determines the presence of a zero byte (error) in the 
+/// A marker that determines the presence of a zero byte (error) in the
 /// formation of CSTR.
 struct ErrDetectedNullByte;
 
-/// The SafeCStrBuilder struct provides an interface for safely creating C-compatible 
-/// strings (strings that are terminated by a null byte). 
-/// It guarantees that all data is valid (does not contain any null bytes), 
+/// The SafeCStrBuilder struct provides an interface for safely creating C-compatible
+/// strings (strings that are terminated by a null byte).
+/// It guarantees that all data is valid (does not contain any null bytes),
 /// except for the trailing null byte.
 struct SafeCStrBuilder(Vec<u8>);
 
@@ -132,8 +132,8 @@ impl SafeCStrBuilder {
 		self.0.is_empty()
 	}
 	
-	/// Returns a fragment of CSTR bytes. 
-	/// 
+	/// Returns a fragment of CSTR bytes.
+	///
 	/// (always without trailing null byte)
 	#[inline]
 	#[allow(dead_code)]
@@ -151,7 +151,7 @@ impl SafeCStrBuilder {
 			Some(..) => Err(ErrDetectedNullByte),
 			None => {
 				self.0.extend_from_slice(arr);
-				
+
 				Ok(())
 			}
 		}
@@ -159,7 +159,7 @@ impl SafeCStrBuilder {
 	
 	/// Converts the CSTR into a COW slice of bytes.
 	/// 
-	/// !Note that if the string is empty, no allocation occurs and a single 
+	/// !Note that if the string is empty, no allocation occurs and a single
 	/// generic empty CSTR is returned.
 	pub fn into(mut self) -> Cow<'static, [u8]> {
 		match self.is_empty() {
@@ -171,7 +171,7 @@ impl SafeCStrBuilder {
 			},
 			false => {
 				self.0.push(0);
-		
+				
 				self.0.into()
 			}
 		}
