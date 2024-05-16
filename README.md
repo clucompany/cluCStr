@@ -54,9 +54,9 @@ use cluCStr::cstr;
 use core::ffi::CStr;
 
 fn main() {
- let cstr = cstr!(b"How are you?");
- 
- assert_eq!(cstr.to_bytes_with_nul(), b"How are you?\0");
+	let cstr = cstr!(b"How are you?");
+	
+	assert_eq!(cstr.to_bytes_with_nul(), b"How are you?\0");
 }
 ```
 
